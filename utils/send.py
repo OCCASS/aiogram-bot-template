@@ -7,7 +7,11 @@ from loader import bot
 
 async def get_chat_id() -> int:
     """This function used to get current chat id"""
-    return types.Chat.get_current().id
+    chat = types.Chat.get_current()
+    if chat is None:
+        chat = types.User.get_current()
+
+    return chat.id if chat is not None else None
 
 
 async def send_message(message_text: str,
